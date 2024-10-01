@@ -104,10 +104,10 @@ const AboutUs = () => {
           <h1 style={{ fontSize: '2rem', fontWeight: 'bold' }}>JurisVision</h1>
           <nav>
             <ul style={{ display: 'flex', gap: '2rem', listStyle: 'none' }}>
-              {['about', 'services', 'contact'].map((item) => (
+              {['PatentAnalysis', 'ChatBot'].map((item) => (
                 <li key={item}>
                   <a 
-                    href={`#${item}`} 
+                    href={`#${item.toLowerCase()}`} 
                     style={{ 
                       color: 'white', 
                       textDecoration: 'none',
@@ -121,7 +121,7 @@ const AboutUs = () => {
                       e.target.style.color = 'white';
                     }}
                   >
-                    {item.charAt(0).toUpperCase() + item.slice(1)}
+                    {item}
                     <span style={{
                       position: 'absolute',
                       bottom: '-5px',
@@ -212,43 +212,16 @@ const AboutUs = () => {
         }}>
           <h2 style={{ fontSize: '2.5rem', color: '#2c5282', marginBottom: '2rem' }}>Contact Us</h2>
           <p style={{ fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem' }}>
-            Interested in learning more about how JurisVision can revolutionize your legal practice? Get in touch with us today.
+            Reach out to us for any inquiries or to learn more about how we can help your legal practice.
           </p>
-          <a 
-            href="mailto:info@jurisvision.com" 
-            style={{
-              backgroundColor: '#2c5282',
-              color: 'white',
-              padding: '0.75rem 1.5rem',
-              borderRadius: '5px',
-              textDecoration: 'none',
-              fontSize: '1.1rem',
-              fontWeight: 'bold',
-              transition: 'all 0.3s ease',
-              display: 'inline-block',
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = '#1a365d';
-              e.target.style.transform = 'scale(1.05)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = '#2c5282';
-              e.target.style.transform = 'scale(1)';
-            }}
-          >
-            Contact Us
-          </a>
+          <p style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>
+            Email: contact@jurisvision.com
+          </p>
+          <p style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>
+            Phone: +1 123 456 7890
+          </p>
         </section>
       </main>
-
-      <footer style={{
-        backgroundColor: 'rgba(26, 54, 93, 0.9)',
-        color: 'white',
-        padding: '2rem 0',
-        textAlign: 'center',
-      }}>
-        <p>&copy; 2024 JurisVision. All rights reserved.</p>
-      </footer>
     </div>
   );
 };
