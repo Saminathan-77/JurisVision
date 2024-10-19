@@ -4,7 +4,11 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'noise': "url('https://www.transparenttextures.com/patterns/noise.png')", // Static noise texture
+      },
+    },
   },
   plugins: [],
 }

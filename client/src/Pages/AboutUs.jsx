@@ -104,7 +104,7 @@ const AboutUs = () => {
           <h1 style={{ fontSize: '2rem', fontWeight: 'bold' }}>JurisVision</h1>
           <nav>
             <ul style={{ display: 'flex', gap: '2rem', listStyle: 'none' }}>
-              {['PatentAnalysis', 'ChatBot', 'Login'].map((item) => (
+              {['PatentAnalysis', 'ChatBot', 'Login' , 'LawyerSearch'].map((item) => (
                 <li key={item}>
                   <a 
                     href={`${item.toLowerCase()}`} 
