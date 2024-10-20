@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { Search, MapPin, Briefcase, Phone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../Firebase';
+import { db } from 'C:/Users/Admin/Documents/ALLmyCODINGstuff/College Projects/Keys/Firebase';
 
 const LawyerSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');

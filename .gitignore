@@ -1,4 +1,4 @@
 node_modules
 venv
 Firebase.js
-client/src/Firebase.js
+client\src\Firebase.js

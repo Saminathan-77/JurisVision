@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, addDoc } from "firebase/firestore";
 import { UserPlus, MapPin, Briefcase, Phone, User } from 'lucide-react';
-import { db } from '../Firebase';
+import { db } from 'C:/Users/Admin/Documents/ALLmyCODINGstuff/College Projects/Keys/Firebase';
 
 const AddLawyer = () => {
   const [lawyerData, setLawyerData] = useState({
