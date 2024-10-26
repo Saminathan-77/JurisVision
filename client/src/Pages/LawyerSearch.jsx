@@ -1,34 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { Search, MapPin, Briefcase, Phone } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { db } from 'C:/Users/Admin/Documents/ALLmyCODINGstuff/College Projects/Keys/Firebase';
+import React, { useState, useEffect } from "react";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { Search, MapPin, Briefcase, Phone } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { db } from "../../Firebase";
 
 const LawyerSearch = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [lawyers, setLawyers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.body.style.background = 'linear-gradient(135deg, #000000 0%, #1a0033 50%, #000000 100%)';
-    document.body.style.minHeight = '100vh';
+    document.body.style.background =
+      "linear-gradient(135deg, #000000 0%, #1a0033 50%, #000000 100%)";
+    document.body.style.minHeight = "100vh";
     fetchLawyers();
     return () => {
-      document.body.style.background = '';
+      document.body.style.background = "";
     };
   }, []);
 
-  const fetchLawyers = async (search = '') => {
+  const fetchLawyers = async (search = "") => {
     setIsLoading(true);
     try {
-      const lawyersCollection = collection(db, 'lawyers');
-      const q = search ? query(lawyersCollection, where('name', '==', search)) : lawyersCollection;
+      const lawyersCollection = collection(db, "lawyers");
+      const q = search
+        ? query(lawyersCollection, where("name", "==", search))
+        : lawyersCollection;
       const querySnapshot = await getDocs(q);
       const lawyerList = querySnapshot.docs.map((doc) => doc.data());
       setLawyers(lawyerList);
     } catch (error) {
-      console.error('Error fetching lawyers:', error);
+      console.error("Error fetching lawyers:", error);
     } finally {
       setIsLoading(false);
     }
@@ -75,7 +78,7 @@ const LawyerSearch = () => {
         {/* Add Lawyer Button */}
         <div className="text-center mb-12">
           <button
-            onClick={() => navigate('/add-lawyer')}
+            onClick={() => navigate("/add-lawyer")}
             className="px-8 py-4 bg-green-600 text-white rounded-lg text-lg font-medium hover:bg-green-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500"
           >
             Add a Lawyer
@@ -85,14 +88,18 @@ const LawyerSearch = () => {
         {/* Lawyers Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {isLoading ? (
-            <div className="col-span-full text-center text-white text-xl">Loading...</div>
+            <div className="col-span-full text-center text-white text-xl">
+              Loading...
+            </div>
           ) : lawyers.length ? (
             lawyers.map((lawyer, index) => (
               <div
                 key={index}
                 className="bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
               >
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">{lawyer.name}</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                  {lawyer.name}
+                </h2>
                 <div className="space-y-4">
                   <div className="flex items-center text-gray-600">
                     <MapPin className="w-5 h-5 mr-3 text-purple-600" />

@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { collection, addDoc } from "firebase/firestore";
-import { UserPlus, MapPin, Briefcase, Phone, User } from 'lucide-react';
-import { db } from 'C:/Users/Admin/Documents/ALLmyCODINGstuff/College Projects/Keys/Firebase';
+import { UserPlus, MapPin, Briefcase, Phone, User } from "lucide-react";
+import { db } from "../../Firebase";
 
 const AddLawyer = () => {
   const [lawyerData, setLawyerData] = useState({
-    name: '',
-    location: '',
-    specialization: '',
-    contact: ''
+    name: "",
+    location: "",
+    specialization: "",
+    contact: "",
   });
 
   useEffect(() => {
-    document.body.style.background = 'linear-gradient(135deg, #001F3F 0%, #065666 50%, #001F3F 100%)';
-    document.body.style.minHeight = '100vh';
-    
+    document.body.style.background =
+      "linear-gradient(135deg, #001F3F 0%, #065666 50%, #001F3F 100%)";
+    document.body.style.minHeight = "100vh";
+
     return () => {
-      document.body.style.background = '';
+      document.body.style.background = "";
     };
   }, []);
 
@@ -27,9 +28,14 @@ const AddLawyer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, 'lawyers'), lawyerData);
+      await addDoc(collection(db, "lawyers"), lawyerData);
       alert("Lawyer added successfully");
-      setLawyerData({ name: '', location: '', specialization: '', contact: '' });
+      setLawyerData({
+        name: "",
+        location: "",
+        specialization: "",
+        contact: "",
+      });
     } catch (error) {
       console.error("Error adding lawyer:", error);
     }
@@ -109,8 +115,8 @@ const AddLawyer = () => {
               />
             </div>
 
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="w-full bg-gradient-to-r from-teal-500 to-cyan-600 text-white py-4 px-6 rounded-lg text-lg font-medium hover:from-teal-600 hover:to-cyan-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transform hover:-translate-y-0.5"
             >
               <div className="flex items-center justify-center">
