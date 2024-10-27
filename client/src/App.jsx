@@ -1,12 +1,12 @@
-import React from 'react';
-import AboutUs from './Pages/AboutUs';
-import ChatBot from './Pages/ChatBot';
-import PatentAnalysis from './Pages/PatentAnalysis';
-import Signup from './Pages/Signup';
-import Login from './Pages/Login';
-import AddLawyer from './Pages/AddLawyer';
-import LawyerSearch from './Pages/LawyerSearch';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from "react";
+import AboutUs from "./Pages/AboutUs";
+import ChatBot from "./Pages/ChatBot";
+import PatentAnalysis from "./Pages/PatentAnalysis";
+import Signup from "./Pages/Signup";
+import Login from "./Pages/Login";
+import AddLawyer from "./Pages/AddLawyer";
+import LawyerSearch from "./Pages/LawyerSearch";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/lawyersearch" element={<LawyerSearch />} />
-        <Route path="/add-lawyer" element={<AddLawyer />} />
+        <Route path="/addlawyer" element={<AddLawyer />} />
       </Routes>
     </Router>
   );

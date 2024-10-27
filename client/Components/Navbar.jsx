@@ -79,27 +79,31 @@ const Navbar = () => {
               padding: 0,
             }}
           >
-            {["PatentAnalysis", "ChatBot", "Login", "LawyerSearch"].map(
-              (item) => (
-                <li key={item}>
-                  <a
-                    href={`/${item.toLowerCase()}`}
-                    style={linkStyle}
-                    onMouseEnter={(e) => {
-                      e.target.style.color = "#4299e1";
-                      e.target.querySelector("span").style.width = "100%";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.color = "white";
-                      e.target.querySelector("span").style.width = "0";
-                    }}
-                  >
-                    {item}
-                    <span style={underlineStyle}></span>
-                  </a>
-                </li>
-              )
-            )}
+            {[
+              "Login",
+              "PatentAnalysis",
+              "ChatBot",
+              "LawyerSearch",
+              "AddLawyer",
+            ].map((item) => (
+              <li key={item}>
+                <a
+                  href={`/${item.toLowerCase()}`}
+                  style={linkStyle}
+                  onMouseEnter={(e) => {
+                    e.target.style.color = "#4299e1";
+                    e.target.querySelector("span").style.width = "100%";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.color = "white";
+                    e.target.querySelector("span").style.width = "0";
+                  }}
+                >
+                  {item}
+                  <span style={underlineStyle}></span>
+                </a>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>

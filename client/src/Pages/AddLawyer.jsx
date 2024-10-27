@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { collection, addDoc } from "firebase/firestore";
-import { UserPlus, MapPin, Briefcase, Phone, User, Mail, Clock } from "lucide-react";
+import {
+  UserPlus,
+  MapPin,
+  Briefcase,
+  Phone,
+  User,
+  Mail,
+  Clock,
+} from "lucide-react";
 import { db } from "../../Firebase";
+import Navbar from "../../Components/Navbar";
 
 const styles = `
   body {
@@ -178,104 +187,103 @@ const AddLawyer = () => {
   };
 
   return (
-    <div className="container">
-      <div className="header">
-        <h1>Add New Lawyer</h1>
-        <p>Register a legal professional to our network</p>
-      </div>
-
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Lawyer's Full Name */}
-        <div className="form-group">
-          <User className="icon h-5 w-5" />
-          <input
-            type="text"
-            name="name"
-            placeholder="Lawyer's Full Name"
-            value={lawyerData.name}
-            onChange={handleChange}
-            required
-          />
+    <div>
+      <Navbar />
+      <div className="container">
+        <div className="header">
+          <h1>Add New Lawyer</h1>
+          <p>Register a legal professional to our network</p>
         </div>
 
-        {/* Location */}
-        <div className="form-group">
-          <MapPin className="icon h-5 w-5" />
-          <input
-            type="text"
-            name="location"
-            placeholder="Location"
-            value={lawyerData.location}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        {/* Specialization */}
-        <div className="form-group">
-          <Briefcase className="icon h-5 w-5" />
-          <input
-            type="text"
-            name="specialization"
-            placeholder="Specialization"
-            value={lawyerData.specialization}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        {/* Contact Information */}
-        <div className="form-group">
-          <Phone className="icon h-5 w-5" />
-          <input
-            type="text"
-            name="contact"
-            placeholder="Contact Information"
-            value={lawyerData.contact}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        {/* Email */}
-        <div className="form-group">
-          <Mail className="icon h-5 w-5" />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={lawyerData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        {/* Years of Experience */}
-        <div className="form-group">
-          <Clock className="icon h-5 w-5" />
-          <input
-            type="number"
-            name="yearsOfExperience"
-            placeholder="Years of Experience"
-            value={lawyerData.yearsOfExperience}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        {error && <div className="error-message">{error}</div>}
-
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="submit-button"
-        >
-          <div className="flex items-center justify-center">
-            <UserPlus className="w-5 h-5 mr-2" />
-            {isLoading ? 'Adding...' : 'Add Lawyer'}
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Lawyer's Full Name */}
+          <div className="form-group">
+            <User className="icon h-5 w-5" />
+            <input
+              type="text"
+              name="name"
+              placeholder="Lawyer's Full Name"
+              value={lawyerData.name}
+              onChange={handleChange}
+              required
+            />
           </div>
-        </button>
-      </form>
+
+          {/* Location */}
+          <div className="form-group">
+            <MapPin className="icon h-5 w-5" />
+            <input
+              type="text"
+              name="location"
+              placeholder="Location"
+              value={lawyerData.location}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {/* Specialization */}
+          <div className="form-group">
+            <Briefcase className="icon h-5 w-5" />
+            <input
+              type="text"
+              name="specialization"
+              placeholder="Specialization"
+              value={lawyerData.specialization}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {/* Contact Information */}
+          <div className="form-group">
+            <Phone className="icon h-5 w-5" />
+            <input
+              type="text"
+              name="contact"
+              placeholder="Contact Information"
+              value={lawyerData.contact}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {/* Email */}
+          <div className="form-group">
+            <Mail className="icon h-5 w-5" />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={lawyerData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {/* Years of Experience */}
+          <div className="form-group">
+            <Clock className="icon h-5 w-5" />
+            <input
+              type="number"
+              name="yearsOfExperience"
+              placeholder="Years of Experience"
+              value={lawyerData.yearsOfExperience}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {error && <div className="error-message">{error}</div>}
+
+          <button type="submit" disabled={isLoading} className="submit-button">
+            <div className="flex items-center justify-center">
+              <UserPlus className="w-5 h-5 mr-2" />
+              {isLoading ? "Adding..." : "Add Lawyer"}
+            </div>
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
