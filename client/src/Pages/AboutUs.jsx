@@ -137,7 +137,7 @@ const AboutUs = () => {
               marginBottom: "1.5rem",
             }}
           >
-            Founded in 2022, JurisVision is a pioneering legal tech company
+            Founded in 2024, JurisVision is a pioneering legal tech company
             dedicated to enhancing the efficiency and accuracy of legal work
             through advanced AI technologies. Our team of legal experts, data
             scientists, and software engineers work together to create
@@ -196,9 +196,9 @@ const AboutUs = () => {
                     "Automated contract review to identify risks, obligations, and opportunities.",
                 },
                 {
-                  title: "Predictive Analytics",
+                  title: "Legal Assistance AI",
                   description:
-                    "Data-driven insights to predict case outcomes and optimize legal strategies.",
+                    "Legal Assistance AI An AI-driven tool that answers legal questions, interprets laws, and provides insights based on case law and regulations.",
                 },
               ].map((service, index) => (
                 <div
