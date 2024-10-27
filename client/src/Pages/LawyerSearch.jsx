@@ -300,7 +300,9 @@ const LawyerSearch = () => {
                   <div className="lawyer-avatar">{lawyer.name[0]}</div>
                   <div className="lawyer-info">
                     <h2 className="lawyer-name">{lawyer.name}</h2>
-                    <p className="lawyer-specialty">{lawyer.specialization}</p>
+                    <p className="lawyer-specialty">
+                      {lawyer.specialization} lawyer
+                    </p>
                   </div>
                 </div>
 
