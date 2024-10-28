@@ -85,6 +85,7 @@ const Navbar = () => {
               "ChatBot",
               "LawyerSearch",
               "AddLawyer",
+              "Detect",
             ].map((item) => (
               <li key={item}>
                 <a

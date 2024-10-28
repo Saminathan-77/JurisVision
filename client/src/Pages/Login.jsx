@@ -11,8 +11,6 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      // const response = await axios.post('/api/login', { email, password });
-      // alert('Login successful!');
       navigate('/');
     } catch (error) {
       alert('Login failed. Please check your credentials.');
@@ -67,26 +65,28 @@ const Login = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: linear-gradient(to left, #ec4899, #a855f7, #3b82f6);
+          background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+            url('https://images.unsplash.com/photo-1514458305583-e67f4e153b36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc3M3wwfDF8c2VhcmNofDl8fHNjbGV8ZW58MHx8fHwxNjkwMzI2NzYw&ixlib=rb-1.2.1&q=80&w=1080'); /* Use a legal background image */
+          background-size: cover;
+          background-position: center;
           padding: 1rem;
         }
         .login-form {
-          position: relative;
           width: 100%;
           max-width: 400px;
-          background: rgba(31, 41, 55, 0.8);
+          background: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
           padding: 2rem;
           border-radius: 1rem;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-          transition: transform 1s;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+          transition: transform 0.5s;
         }
         .login-form:hover {
-          transform: scale(1.05);
+          transform: scale(1.03);
         }
         .title {
-          font-size: 2rem;
-          font-weight: bold;
-          color: white;
+          font-size: 1.8rem;
+          font-weight: 700;
+          color: #1f2937;
           margin-bottom: 1.5rem;
           text-align: center;
         }
@@ -96,40 +96,41 @@ const Login = () => {
           gap: 1rem;
         }
         .label {
-          color: white;
+          color: #4a5568;
           font-weight: 600;
         }
         .input {
-          padding: 1rem;
-          border: 1px solid #d1d5db;
+          padding: 0.8rem;
+          border: 1px solid #cbd5e0;
           border-radius: 0.5rem;
-          background: #f7fafc;
-          color: #4a5568;
-          transition: border 0.3s;
+          background: #f8fafc;
+          color: #1f2937;
+          transition: border-color 0.3s;
         }
         .input:focus {
           outline: none;
-          border-color: #4299e1;
+          border-color: #4c51bf; /* Purple border on focus */
         }
         .submit-button {
-          background-color: black;
+          background-color: #4c51bf; /* Deep purple for a sleek look */
           color: white;
           padding: 1rem;
           border-radius: 0.5rem;
           font-weight: 600;
+          cursor: pointer;
           transition: background 0.3s, transform 0.3s;
         }
         .submit-button:hover {
-          background-color: #3182ce;
+          background-color: #3c366b; /* Darker shade on hover */
           transform: scale(1.05);
         }
         .signup-prompt {
           margin-top: 1.5rem;
           text-align: center;
-          color: #d1d5db;
+          color: #4a5568;
         }
         .signup-link {
-          color: #3b82f6;
+          color: #4c51bf;
           text-decoration: underline;
         }
       `}</style>

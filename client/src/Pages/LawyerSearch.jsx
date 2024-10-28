@@ -1,283 +1,140 @@
-import React, { useState, useEffect } from "react";
-import { collection, query, getDocs } from "firebase/firestore";
-import { db } from "../../Firebase";
-import {
-  BookmarkPlus,
-  MoreHorizontal,
-  Clock,
-  MapPin,
-  Mail,
-  Phone,
-  Clock as Experience,
-  User,
-  Briefcase,
-} from "lucide-react";
-import Navbar from "../../Components/Navbar";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
-const styles = `
-/* Base Styles */
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  font-family: 'Arial', sans-serif;
-  box-sizing: border-box;
-}
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-.bg-gradient {
-  background: linear-gradient(135deg, #1a0033 0%, #000000 100%);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-}
-
-.navbar {
-  height: 80px;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2rem;
-}
-
-/* Search Container */
-.search-container {
-  max-width: 800px;
-  width: 100%;
-  margin: 2rem auto;
-}
-
-.search-bar {
-  display: flex;
-  align-items: center;
-  background: white;
-  border-radius: 12px;
-  padding: 0.75rem 1rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  gap: 0.75rem; /* Space between input and button */
-}
-
-.search-input {
-  flex: 1;
-  border: none;
-  outline: none;
-  padding: 0.75rem;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  background-color: #f7f7f7;
-  transition: background-color 0.3s ease;
-}
-
-.search-input:focus {
-  background-color: #e6e6e6;
-}
-
-.search-button {
-  background-color: #6b46c1;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s ease;
-}
-
-.search-button:hover {
-  background-color: #805ad5;
-  transform: translateY(-2px);
-}
-
-/* Cards Container */
-.cards-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem; /* Space between cards */
-  padding: 2rem;
-  width: 100%;
-  max-width: 1200px;
-  justify-items: center;
-}
-
-/* Card Styling */
-.lawyer-card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s ease;
-}
-
-.lawyer-card:hover {
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Responsive Grid */
-@media (min-width: 1024px) {
-  .cards-container {
-    grid-template-columns: repeat(4, 1fr); /* Max 4 elements per row */
-  }
-}
-
-@media (min-width: 600px) and (max-width: 1023px) {
-  .cards-container {
-    grid-template-columns: repeat(2, 1fr); /* 2 elements per row */
-  }
-}
-
-@media (max-width: 599px) {
-  .cards-container {
-    grid-template-columns: 1fr; /* 1 element per row on small screens */
-  }
-}
-
-`;
-
-const styleSheet = document.createElement("style");
-styleSheet.innerText = styles;
-document.head.appendChild(styleSheet);
-
-const LawyerSearch = () => {
-  const [search, setSearch] = useState("");
-  const [lawyers, setLawyers] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchLawyers = async () => {
-      setLoading(true);
-      try {
-        const lawyersCollection = collection(db, "lawyers");
-        const q = query(lawyersCollection);
-        const querySnapshot = await getDocs(q);
-        const lawyersData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setLawyers(lawyersData);
-      } catch (error) {
-        console.error("Error fetching lawyers:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchLawyers();
-  }, []);
-
-  const handleSearch = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
     try {
-      const lawyersCollection = collection(db, "lawyers");
-      const searchQuery = search.toLowerCase();
-      const lawyersData = await getDocs(lawyersCollection);
-      const filteredLawyers = lawyersData.docs.filter((doc) => {
-        const lawyerData = doc.data();
-        for (const key in lawyerData) {
-          if (String(lawyerData[key]).toLowerCase().includes(searchQuery)) {
-            return true;
-          }
-        }
-        return false;
-      });
-      setLawyers(filteredLawyers.map((doc) => ({ id: doc.id, ...doc.data() })));
+      // Simulate a login process
+      // const response = await axios.post('/api/login', { email, password });
+      navigate('/'); // Navigate to home on successful login
     } catch (error) {
-      console.error("Error searching lawyers:", error);
-    } finally {
-      setLoading(false);
+      alert('Login failed. Please check your credentials.'); // Handle error
     }
   };
 
   return (
-    <div className="relative bg-gradient">
-      <div className="fixed top-0 w-full z-50 navbar">
-        <Navbar />
+    <motion.div
+      className="login-container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      <div className="login-form">
+        <h2 className="title">Welcome Back</h2>
+        <form onSubmit={handleLogin} className="form">
+          <label className="label">Email</label>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            aria-label="Email"
+            className="input"
+          />
+          <label className="label">Password</label>
+          <input
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            aria-label="Password"
+            className="input"
+          />
+          <button type="submit" className="submit-button">
+            Login
+          </button>
+        </form>
+        <p className="signup-prompt">
+          Don't have an account? <a href="/signup" className="signup-link">Sign up</a>
+        </p>
       </div>
-
-      <div className="min-h-screen pt-[80px]">
-        <main className="container mx-auto px-4 py-8">
-          <div className="search-container">
-            <form onSubmit={handleSearch} className="w-full">
-              <div className="search-bar">
-                <input
-                  type="text"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search for a lawyer by name, specialty, location, or bio..."
-                  className="search-input"
-                />
-                <button type="submit" className="search-button">
-                  Search
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <div className="cards-container">
-            {lawyers.map((lawyer) => (
-              <div key={lawyer.id} className="lawyer-card">
-                <div className="lawyer-header">
-                  <div className="lawyer-avatar">{lawyer.name[0]}</div>
-                  <div className="lawyer-info">
-                    <h2 className="lawyer-name">{lawyer.name}</h2>
-                    <p className="lawyer-specialty">
-                      {lawyer.specialization} lawyer
-                    </p>
-                  </div>
-                </div>
-
-                <div className="info-row">
-                  <span className="info-title">Location:</span>
-                  <MapPin className="info-icon" />
-                  <p>{lawyer.location}</p>
-                </div>
-
-                <div className="info-row">
-                  <span className="info-title">Email:</span>
-                  <Mail className="info-icon" />
-                  <p>{lawyer.email}</p>
-                </div>
-
-                <div className="info-row">
-                  <span className="info-title">Phone:</span>
-                  <Mail className="info-icon" />
-                  <p>{lawyer.contact}</p>
-                </div>
-
-                <div className="info-row">
-                  <span className="info-title">Years of Experience:</span>
-                  <Experience className="info-icon" />
-                  <p>{lawyer.yearsOfExperience}</p>
-                </div>
-
-                <div className="card-actions">
-                  <button className="action-button">
-                    <BookmarkPlus />
-                  </button>
-                  <button className="action-button">
-                    <MoreHorizontal />
-                  </button>
-                </div>
-              </div>
-            ))}
-
-            {loading && (
-              <div className="loading">
-                <Clock className="loading-icon" />
-                <span>Loading lawyers...</span>
-              </div>
-            )}
-          </div>
-        </main>
-      </div>
-    </div>
+      <style jsx>{`
+        .login-container {
+          position: relative;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+            url('https://images.unsplash.com/photo-1514458305583-e67f4e153b36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc3M3wwfDF8c2VhcmNofDl8fHNjbGV8ZW58MHx8fHwxNjkwMzI2NzYw&ixlib=rb-1.2.1&q=80&w=1080'); /* Use a legal background image */
+          background-size: cover;
+          background-position: center;
+          padding: 1rem;
+        }
+        .login-form {
+          width: 100%;
+          max-width: 400px;
+          background: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+          padding: 2rem;
+          border-radius: 1rem;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+          transition: transform 0.5s;
+        }
+        .login-form:hover {
+          transform: scale(1.03);
+        }
+        .title {
+          font-size: 1.8rem;
+          font-weight: 700;
+          color: #1f2937;
+          margin-bottom: 1.5rem;
+          text-align: center;
+        }
+        .form {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+        .label {
+          color: #4a5568;
+          font-weight: 600;
+        }
+        .input {
+          padding: 0.8rem;
+          border: 1px solid #cbd5e0;
+          border-radius: 0.5rem;
+          background: #f8fafc;
+          color: #1f2937;
+          transition: border-color 0.3s;
+        }
+        .input:focus {
+          outline: none;
+          border-color: #4c51bf; /* Purple border on focus */
+        }
+        .submit-button {
+          background-color: #4c51bf; /* Deep purple for a sleek look */
+          color: white;
+          padding: 1rem;
+          border-radius: 0.5rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: background 0.3s, transform 0.3s;
+        }
+        .submit-button:hover {
+          background-color: #3c366b; /* Darker shade on hover */
+          transform: scale(1.05);
+        }
+        .signup-prompt {
+          margin-top: 1.5rem;
+          text-align: center;
+          color: #4a5568;
+        }
+        .signup-link {
+          color: #4c51bf;
+          text-decoration: underline;
+        }
+      `}</style>
+    </motion.div>
   );
 };
 
-export default LawyerSearch;
+export default Login;
