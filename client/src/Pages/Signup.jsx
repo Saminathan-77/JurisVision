@@ -92,7 +92,7 @@ const Signup = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: linear-gradient(to right, #6b46c1, #63b3ed);
+          background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),; /* Update this to match Login */
           padding: 1rem;
         }
         .background-overlay {
@@ -137,7 +137,6 @@ const Signup = () => {
           border-radius: 0.5rem;
           background: #f7fafc;
           color: #4a5568;
-          placeholder-color: #a0aec0;
           transition: border 0.3s;
         }
         .input:focus {
