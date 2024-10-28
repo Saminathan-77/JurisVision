@@ -6,20 +6,25 @@ import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
 import AddLawyer from "./Pages/AddLawyer";
 import LawyerSearch from "./Pages/LawyerSearch";
+import Detect from "./Pages/Detect";
+import Layout from "../Components/Layout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<AboutUs />} />
-        <Route path="/chatbot" element={<ChatBot />} />
-        <Route path="/patentanalysis" element={<PatentAnalysis />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/lawyersearch" element={<LawyerSearch />} />
-        <Route path="/addlawyer" element={<AddLawyer />} />
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<AboutUs />} />
+          <Route path="/chatbot" element={<ChatBot />} />
+          <Route path="/patentanalysis" element={<PatentAnalysis />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/lawyersearch" element={<LawyerSearch />} />
+          <Route path="/addlawyer" element={<AddLawyer />} />
+          <Route path="/detect" element={<Detect />} />
+        </Routes>
+      </Layout>
     </Router>
   );
 }

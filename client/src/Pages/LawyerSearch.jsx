@@ -1,357 +1,140 @@
-import React, { useState, useEffect } from "react";
-import { collection, query, getDocs } from "firebase/firestore";
-import { db } from "../../Firebase";
-import {
-  BookmarkPlus,
-  MoreHorizontal,
-  Clock,
-  MapPin,
-  Mail,
-  Phone,
-  Clock as Experience,
-  User,
-  Briefcase,
-} from "lucide-react";
-import Navbar from "../../Components/Navbar";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
-const styles = `
-  /* Base styles */
-  html, body {
-    margin: 0;
-    height: 100%;
-    width: 100%;
-  }
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  .min-h-screen {
-    min-height: 100vh;
-  }
-
-  /* Dark Gradient Background */
-  .bg-gradient {
-    background: linear-gradient(135deg, #1a0033 0%, #000000 100%);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-  }
-
-  /* Navbar */
-  .navbar {
-    height: 80px;
-  }
-
-  /* Search Bar */
-  .search-container {
-    max-width: 600px;
-    margin: 0 auto 2rem auto;
-  }
-
-  .search-bar {
-    display: flex;
-    align-items: center;
-    background: white;
-    border-radius: 12px;
-    padding: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-
-  .search-input {
-    border: none;
-    outline: none;
-    padding: 0.75rem;
-    border-radius: 8px;
-    flex: 1;
-    font-size: 1rem;
-  }
-
-  .search-button {
-    background-color: #6b46c1;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 0.75rem 1.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
-  }
-
-  .search-button:hover {
-    background-color: #805ad5;
-    transform: translateY(-1px);
-  }
-
-  /* Lawyer Cards */
-  .cards-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    padding: 1rem;
-  }
-
-  .lawyer-card {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.5s forwards;
-  }
-
-  .lawyer-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-  }
-
-  .lawyer-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-
-  .lawyer-avatar {
-    width: 50px;
-    height: 50px;
-    background-color: #6b46c1;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-right: 0.75rem;
-  }
-
-  .lawyer-info {
-    flex: 1;
-  }
-
-  .lawyer-name {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #2d3748;
-    margin-bottom: 0.25rem;
-  }
-
-  .lawyer-specialty {
-    color: #718096;
-    font-size: 0.75rem;
-  }
-
-  .info-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.5rem;
-    color: #4a5568;
-  }
-
-  .info-title {
-    font-weight: bold;
-    margin-right: 0.5rem;
-  }
-
-  .info-icon {
-    margin-right: 0.5rem;
-    color: #6b46c1;
-  }
-
-  .card-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 0.5rem;
-    padding-top: 0.5rem;
-    border-top: 1px solid #e2e8f0;
-  }
-
-  .action-button {
-    padding: 0.25rem;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-    cursor: pointer;
-  }
-
-  .action-button:hover {
-    background-color: #f7fafc;
-    transform: scale(1.1);
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Loading Styles */
-  .loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.25rem;
-    padding: 2rem;
-  }
-
-  .loading-icon {
-    animation: spin 1s linear infinite;
-    margin-right: 0.75rem;
-  }
-
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-`;
-
-const styleSheet = document.createElement("style");
-styleSheet.innerText = styles;
-document.head.appendChild(styleSheet);
-
-const LawyerSearch = () => {
-  const [search, setSearch] = useState("");
-  const [lawyers, setLawyers] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchLawyers = async () => {
-      setLoading(true);
-      try {
-        const lawyersCollection = collection(db, "lawyers");
-        const q = query(lawyersCollection);
-        const querySnapshot = await getDocs(q);
-        const lawyersData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setLawyers(lawyersData);
-      } catch (error) {
-        console.error("Error fetching lawyers:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchLawyers();
-  }, []);
-
-  const handleSearch = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
     try {
-      const lawyersCollection = collection(db, "lawyers");
-      const searchQuery = search.toLowerCase();
-      const lawyersData = await getDocs(lawyersCollection);
-      const filteredLawyers = lawyersData.docs.filter((doc) => {
-        const lawyerData = doc.data();
-        for (const key in lawyerData) {
-          if (String(lawyerData[key]).toLowerCase().includes(searchQuery)) {
-            return true;
-          }
-        }
-        return false;
-      });
-      setLawyers(filteredLawyers.map((doc) => ({ id: doc.id, ...doc.data() })));
+      // Simulate a login process
+      // const response = await axios.post('/api/login', { email, password });
+      navigate('/'); // Navigate to home on successful login
     } catch (error) {
-      console.error("Error searching lawyers:", error);
-    } finally {
-      setLoading(false);
+      alert('Login failed. Please check your credentials.'); // Handle error
     }
   };
 
   return (
-    <div className="relative bg-gradient">
-      <div className="fixed top-0 w-full z-50 navbar">
-        <Navbar />
+    <motion.div
+      className="login-container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      <div className="login-form">
+        <h2 className="title">Welcome Back</h2>
+        <form onSubmit={handleLogin} className="form">
+          <label className="label">Email</label>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            aria-label="Email"
+            className="input"
+          />
+          <label className="label">Password</label>
+          <input
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            aria-label="Password"
+            className="input"
+          />
+          <button type="submit" className="submit-button">
+            Login
+          </button>
+        </form>
+        <p className="signup-prompt">
+          Don't have an account? <a href="/signup" className="signup-link">Sign up</a>
+        </p>
       </div>
-
-      <div className="min-h-screen pt-[80px]">
-        <main className="container mx-auto px-4 py-8">
-          <div className="search-container">
-            <form onSubmit={handleSearch} className="w-full">
-              <div className="search-bar">
-                <input
-                  type="text"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search for a lawyer by name, specialty, location, or bio..."
-                  className="search-input"
-                />
-                <button type="submit" className="search-button">
-                  Search
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <div className="cards-container">
-            {lawyers.map((lawyer) => (
-              <div key={lawyer.id} className="lawyer-card">
-                <div className="lawyer-header">
-                  <div className="lawyer-avatar">{lawyer.name[0]}</div>
-                  <div className="lawyer-info">
-                    <h2 className="lawyer-name">{lawyer.name}</h2>
-                    <p className="lawyer-specialty">
-                      {lawyer.specialization} lawyer
-                    </p>
-                  </div>
-                </div>
-
-                <div className="info-row">
-                  <span className="info-title">Location:</span>
-                  <MapPin className="info-icon" />
-                  <p>{lawyer.location}</p>
-                </div>
-
-                <div className="info-row">
-                  <span className="info-title">Email:</span>
-                  <Mail className="info-icon" />
-                  <p>{lawyer.email}</p>
-                </div>
-
-                <div className="info-row">
-                  <span className="info-title">Phone:</span>
-                  <Mail className="info-icon" />
-                  <p>{lawyer.contact}</p>
-                </div>
-
-                <div className="info-row">
-                  <span className="info-title">Years of Experience:</span>
-                  <Experience className="info-icon" />
-                  <p>{lawyer.yearsOfExperience}</p>
-                </div>
-
-                <div className="card-actions">
-                  <button className="action-button">
-                    <BookmarkPlus />
-                  </button>
-                  <button className="action-button">
-                    <MoreHorizontal />
-                  </button>
-                </div>
-              </div>
-            ))}
-
-            {loading && (
-              <div className="loading">
-                <Clock className="loading-icon" />
-                <span>Loading lawyers...</span>
-              </div>
-            )}
-          </div>
-        </main>
-      </div>
-    </div>
+      <style jsx>{`
+        .login-container {
+          position: relative;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+            url('https://images.unsplash.com/photo-1514458305583-e67f4e153b36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc3M3wwfDF8c2VhcmNofDl8fHNjbGV8ZW58MHx8fHwxNjkwMzI2NzYw&ixlib=rb-1.2.1&q=80&w=1080'); /* Use a legal background image */
+          background-size: cover;
+          background-position: center;
+          padding: 1rem;
+        }
+        .login-form {
+          width: 100%;
+          max-width: 400px;
+          background: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+          padding: 2rem;
+          border-radius: 1rem;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+          transition: transform 0.5s;
+        }
+        .login-form:hover {
+          transform: scale(1.03);
+        }
+        .title {
+          font-size: 1.8rem;
+          font-weight: 700;
+          color: #1f2937;
+          margin-bottom: 1.5rem;
+          text-align: center;
+        }
+        .form {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+        .label {
+          color: #4a5568;
+          font-weight: 600;
+        }
+        .input {
+          padding: 0.8rem;
+          border: 1px solid #cbd5e0;
+          border-radius: 0.5rem;
+          background: #f8fafc;
+          color: #1f2937;
+          transition: border-color 0.3s;
+        }
+        .input:focus {
+          outline: none;
+          border-color: #4c51bf; /* Purple border on focus */
+        }
+        .submit-button {
+          background-color: #4c51bf; /* Deep purple for a sleek look */
+          color: white;
+          padding: 1rem;
+          border-radius: 0.5rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: background 0.3s, transform 0.3s;
+        }
+        .submit-button:hover {
+          background-color: #3c366b; /* Darker shade on hover */
+          transform: scale(1.05);
+        }
+        .signup-prompt {
+          margin-top: 1.5rem;
+          text-align: center;
+          color: #4a5568;
+        }
+        .signup-link {
+          color: #4c51bf;
+          text-decoration: underline;
+        }
+      `}</style>
+    </motion.div>
   );
 };
 
-export default LawyerSearch;
+export default Login;
