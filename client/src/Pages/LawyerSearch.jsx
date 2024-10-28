@@ -15,202 +15,128 @@ import {
 import Navbar from "../../Components/Navbar";
 
 const styles = `
-  /* Base styles */
-  html, body {
-    margin: 0;
-    height: 100%;
-    width: 100%;
-  }
+/* Base Styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: 'Arial', sans-serif;
+  box-sizing: border-box;
+}
 
-  .min-h-screen {
-    min-height: 100vh;
-  }
+.bg-gradient {
+  background: linear-gradient(135deg, #1a0033 0%, #000000 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
 
-  /* Dark Gradient Background */
-  .bg-gradient {
-    background: linear-gradient(135deg, #1a0033 0%, #000000 100%);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-  }
+.navbar {
+  height: 80px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
 
-  /* Navbar */
-  .navbar {
-    height: 80px;
-  }
+/* Search Container */
+.search-container {
+  max-width: 800px;
+  width: 100%;
+  margin: 2rem auto;
+}
 
-  /* Search Bar */
-  .search-container {
-    max-width: 600px;
-    margin: 0 auto 2rem auto;
-  }
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  gap: 0.75rem; /* Space between input and button */
+}
 
-  .search-bar {
-    display: flex;
-    align-items: center;
-    background: white;
-    border-radius: 12px;
-    padding: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  background-color: #f7f7f7;
+  transition: background-color 0.3s ease;
+}
 
-  .search-input {
-    border: none;
-    outline: none;
-    padding: 0.75rem;
-    border-radius: 8px;
-    flex: 1;
-    font-size: 1rem;
-  }
+.search-input:focus {
+  background-color: #e6e6e6;
+}
 
-  .search-button {
-    background-color: #6b46c1;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 0.75rem 1.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
-  }
+.search-button {
+  background-color: #6b46c1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s ease;
+}
 
-  .search-button:hover {
-    background-color: #805ad5;
-    transform: translateY(-1px);
-  }
+.search-button:hover {
+  background-color: #805ad5;
+  transform: translateY(-2px);
+}
 
-  /* Lawyer Cards */
+/* Cards Container */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem; /* Space between cards */
+  padding: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  justify-items: center;
+}
+
+/* Card Styling */
+.lawyer-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s ease;
+}
+
+.lawyer-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Grid */
+@media (min-width: 1024px) {
   .cards-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    padding: 1rem;
+    grid-template-columns: repeat(4, 1fr); /* Max 4 elements per row */
   }
+}
 
-  .lawyer-card {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.5s forwards;
+@media (min-width: 600px) and (max-width: 1023px) {
+  .cards-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 elements per row */
   }
+}
 
-  .lawyer-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+@media (max-width: 599px) {
+  .cards-container {
+    grid-template-columns: 1fr; /* 1 element per row on small screens */
   }
+}
 
-  .lawyer-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-
-  .lawyer-avatar {
-    width: 50px;
-    height: 50px;
-    background-color: #6b46c1;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-right: 0.75rem;
-  }
-
-  .lawyer-info {
-    flex: 1;
-  }
-
-  .lawyer-name {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #2d3748;
-    margin-bottom: 0.25rem;
-  }
-
-  .lawyer-specialty {
-    color: #718096;
-    font-size: 0.75rem;
-  }
-
-  .info-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.5rem;
-    color: #4a5568;
-  }
-
-  .info-title {
-    font-weight: bold;
-    margin-right: 0.5rem;
-  }
-
-  .info-icon {
-    margin-right: 0.5rem;
-    color: #6b46c1;
-  }
-
-  .card-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 0.5rem;
-    padding-top: 0.5rem;
-    border-top: 1px solid #e2e8f0;
-  }
-
-  .action-button {
-    padding: 0.25rem;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-    cursor: pointer;
-  }
-
-  .action-button:hover {
-    background-color: #f7fafc;
-    transform: scale(1.1);
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Loading Styles */
-  .loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.25rem;
-    padding: 2rem;
-  }
-
-  .loading-icon {
-    animation: spin 1s linear infinite;
-    margin-right: 0.75rem;
-  }
-
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
 `;
 
 const styleSheet = document.createElement("style");
