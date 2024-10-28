@@ -137,12 +137,9 @@ const AboutUs = () => {
               marginBottom: "1.5rem",
             }}
           >
-            Founded in 2024, JurisVision is a pioneering legal tech company
-            dedicated to enhancing the efficiency and accuracy of legal work
-            through advanced AI technologies. Our team of legal experts, data
-            scientists, and software engineers work together to create
-            cutting-edge solutions for law firms, corporate legal departments,
-            and individual practitioners.
+            JurisVision is a web-based legal platform that leverages AI to assist legal professionals, patent examiners, and researchers. 
+            It offers features like patent analysis, similarity reporting, a lawyering chatbot, and lawyer search, simplifying patent applications,
+            legal research, and document comparison with advanced NLP and AI-driven insights.
           </p>
           <p style={{ fontSize: "1.1rem", lineHeight: "1.6" }}>
             We believe in the power of technology to augment human expertise,
@@ -181,24 +178,24 @@ const AboutUs = () => {
             >
               {[
                 {
-                  title: "AI-Powered Patent Analysis",
+                  title: "Legal Assistant Chatbot",
                   description:
-                    "Quickly analyze patents for novelty, infringement risks, and market potential.",
+                    "Quickly interact with AI-Lawyers, to get easy consultations",
                 },
                 {
-                  title: "Legal Research Assistant",
+                  title: "AI Content Detection in Patent",
                   description:
-                    "Efficient case law research and summary generation using natural language processing.",
+                    "Easily detect AI content in patents, to get more indepth analysis.",
                 },
                 {
-                  title: "Contract Review & Analysis",
+                  title: "Document Query Model",
                   description:
-                    "Automated contract review to identify risks, obligations, and opportunities.",
+                    "Interact with Patents by querying it. Visualize your responses using flowcharts and tables",
                 },
                 {
-                  title: "Legal Assistance AI",
+                  title: "Patent Similarity Analysis",
                   description:
-                    "Legal Assistance AI An AI-driven tool that answers legal questions, interprets laws, and provides insights based on case law and regulations.",
+                    "Compare two patents, to see how similar they are. Identify related patents",
                 },
               ].map((service, index) => (
                 <div
